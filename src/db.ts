@@ -1,19 +1,25 @@
-import { Pool } from 'pg';
 
-const connectionString = process.env.DATABASE_URL;
+import sqlite3 from 'sqlite3';
+import path from 'path';
 
-const pool = new Pool({
-  connectionString,
-});
+// Path to the SQLite database file
+const dbPath = process.env.NODE_ENV === 'production' 
+    ? path.resolve(__dirname, '../database/sih.db') 
+    : path.resolve(__dirname, '../../database/sih.db');
 
-pool.on('connect', () => {
-  console.log('Connected to the PostgreSQL database.');
-});
+let db: sqlite3.Database;
 
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err);
-  process.exit(-1);
-});
+export const getDb = () => {
+  if (!db) {
+    db = new (sqlite3.verbose().Database)(dbPath, (err) => {
+      if (err) {
+        console.error('Error opening database', err.message);
+      } else {
+        console.log('Connected to the SQLite database.');
+      }
+    });
+  }
+  return db;
+};
 
-export const query = (text: string, params?: any[]) => pool.query(text, params);
-export const getDb = () => pool;
+// No query function needed for sqlite3 in this format
