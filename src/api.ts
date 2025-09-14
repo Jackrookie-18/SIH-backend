@@ -1,12 +1,13 @@
 import 'dotenv/config';
-// backend/src/api.ts
 import express from 'express';
 import cors from 'cors';
 import { getDb } from './db';
 import { categorizeAthlete } from './ai';
+import http from 'http';
+import { createWebSocketServer } from './server';
 
 const app = express();
-const port = 3002;
+const port = process.env.PORT || 3002;
 const db = getDb();
 
 app.use(cors());
@@ -82,6 +83,10 @@ app.post('/athletes', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`API server listening on port ${port}`);
+const server = http.createServer(app);
+
+createWebSocketServer(server);
+
+server.listen(port, () => {
+    console.log(`API and WebSocket server listening on port ${port}`);
 });
