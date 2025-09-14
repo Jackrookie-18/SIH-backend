@@ -3,7 +3,7 @@ import sqlite3 from 'sqlite3';
 import path from 'path';
 import fs from 'fs';
 
-const dbPath = path.join(process.cwd(), '..', 'database', 'sih.db');
+const dbPath = path.join(process.cwd(), 'database', 'sih.db');
 
 // Ensure the database directory exists
 const dbDir = path.dirname(dbPath);
@@ -21,7 +21,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 function initializeDb() {
-    const schemaPath = path.join(process.cwd(), '..', 'database', 'schema.sql');
+    const schemaPath = path.join(process.cwd(), 'database', 'schema.sql');
     const schema = fs.readFileSync(schemaPath, 'utf8');
 
     db.exec(schema, (err) => {

@@ -3,9 +3,7 @@ import sqlite3 from 'sqlite3';
 import path from 'path';
 
 // Path to the SQLite database file
-const dbPath = process.env.NODE_ENV === 'production' 
-    ? path.resolve(__dirname, '../database/sih.db') 
-    : path.resolve(__dirname, '../../database/sih.db');
+const dbPath = path.join(process.cwd(), 'database', 'sih.db');
 
 let db: sqlite3.Database;
 
