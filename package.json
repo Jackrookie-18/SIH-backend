@@ -7,9 +7,7 @@
     "dev": "npm-run-all --parallel dev:api dev:ws",
     "dev:api": "ts-node src/api.ts",
     "dev:ws": "ts-node src/server.ts",
-    "start": "npm-run-all --parallel start:api start:ws",
-    "start:api": "node dist/api.js",
-    "start:ws": "node dist/server.js",
+    "start": "node dist/api.js",
     "build": "tsc"
   },
   "dependencies": {

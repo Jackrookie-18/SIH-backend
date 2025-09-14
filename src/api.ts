@@ -28,7 +28,9 @@ app.get('/athletes', (req, res) => {
 
     db.all(query, [], (err, rows) => {
         if (err) {
+            console.error('Failed to fetch athletes:', err.message);
             res.status(500).json({ error: 'Failed to fetch athletes' });
+            return;
         }
         const athletes = rows.map((row: any) => ({
             ...row,
