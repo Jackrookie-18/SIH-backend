@@ -62,13 +62,11 @@ app.get('/athletes', (req, res) => {
 });
 
 app.post('/athletes', (req, res) => {
-    const { name, height, weight, strength, interests, videos } = req.body;
+    const { name, height, weight, strength, category, interests, videos } = req.body;
 
-    if (!name || !height || !weight || !strength || !interests || !videos) {
+    if (!name || !height || !weight || !strength || !category || !interests || !videos) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
-
-    const category = categorizeAthlete(height, weight, strength);
 
     db.serialize(() => {
         db.run('BEGIN TRANSACTION');
